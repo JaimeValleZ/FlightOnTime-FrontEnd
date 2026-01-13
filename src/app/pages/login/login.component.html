@@ -1,1 +1,107 @@
-<p>login works!</p>
+<div class="min-h-screen flex flex-col">
+
+  <!-- HEADER -->
+  <header class="flex items-center justify-between px-6 py-4 border-b border-border">
+    <div class="flex items-center gap-3">
+      <div class="size-8 text-primary">
+        <svg viewBox="0 0 48 48" class="w-full h-full" fill="currentColor">
+        </svg>
+      </div>
+      <h2 class="text-xl font-bold">FlightPredictor Pro</h2>
+    </div>
+
+    <nav class="hidden sm:flex gap-6 text-sm text-text-secondary">
+      <a class="hover:text-primary">Ayuda</a>
+      <a class="hover:text-primary">Contacto</a>
+    </nav>
+  </header>
+
+  <!-- MAIN -->
+  <main class="flex flex-1">
+
+    <!-- PANEL IZQUIERDO -->
+    <section class="hidden lg:flex flex-1 relative overflow-hidden">
+
+      <!-- Imagen -->
+      <img src="assets/login_image.png" alt="Flight background" class="absolute inset-0 w-full h-full object-cover" />
+
+      <!-- Gradiente oscuro (abajo → arriba) -->
+      <div class="absolute inset-0
+           bg-gradient-to-t
+           from-background
+           via-background/60
+           to-transparent">
+      </div>
+
+      <!-- Contenido -->
+      <div class="relative z-10 p-16 flex flex-col justify-end max-w-lg">
+        <div class="mb-6 flex items-center justify-center size-12 rounded-xl bg-primary/20 text-primary">
+          <span class="material-symbols-outlined text-2xl">flight_takeoff</span>
+        </div>
+
+        <h1 class="text-4xl font-bold leading-tight mb-4">
+          Predice el futuro de tu viaje con precisión.
+        </h1>
+
+        <p class="text-text-secondary text-lg">
+          Accede a nuestra plataforma de inteligencia artificial para obtener
+          pronósticos de vuelos en tiempo real.
+        </p>
+      </div>
+
+    </section>
+
+
+    <!-- LOGIN -->
+    <section class="flex flex-1 items-center justify-center px-6">
+      <div class="w-full max-w-md card p-8">
+
+        <h2 class="text-3xl font-black mb-2">Bienvenido de nuevo</h2>
+        <p class="text-text-secondary mb-8">
+          Ingresa a tu cuenta para acceder a las predicciones.
+        </p>
+
+        <form class="space-y-6" [formGroup]="loginForm" (ngSubmit)="submit()">
+
+          <!-- EMAIL -->
+          <div>
+            <label class="block mb-2 text-sm font-medium">
+              Correo electrónico
+            </label>
+            <input type="email" class="form-input" placeholder="ejemplo@correo.com" formControlName="correo" />
+          </div>
+
+          <!-- PASSWORD -->
+          <div>
+            <label class="block mb-2 text-sm font-medium">
+              Contraseña
+            </label>
+            <input type="password" class="form-input" placeholder="Ingresa tu contraseña"
+              formControlName="contrasenha" />
+            <div class="text-right mt-2">
+              <a class="text-sm text-primary hover:underline">
+                ¿Olvidaste tu contraseña?
+              </a>
+            </div>
+          </div>
+
+          <!-- BUTTON -->
+          <button type="submit" class="btn-primary w-full" [disabled]="loading">
+            {{ loading ? 'Ingresando...' : 'Iniciar Sesión' }}
+          </button>
+
+        </form>
+
+
+        <p class="text-center text-sm text-text-secondary mt-6">
+          ¿No tienes una cuenta?
+          <a class="text-primary font-bold hover:underline">
+            Crear cuenta
+          </a>
+        </p>
+
+      </div>
+    </section>
+
+  </main>
+</div>
