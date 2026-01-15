@@ -1,0 +1,63 @@
+<header
+  class="sticky top-0 z-50 transition-all duration-300
+         border-b border-slate-200 dark:border-[#282e39]"
+  [ngClass]="{
+    'bg-background-light dark:bg-[#111318] shadow-sm': !scrolled,
+    'bg-background-light/80 dark:bg-[#111318]/80 backdrop-blur-md shadow-md': scrolled
+  }">
+
+  <div class="flex items-center justify-between px-6 py-3 md:px-10">
+
+    <!-- IZQUIERDA: Logo + Inicio -->
+    <div class="flex items-center gap-8">
+
+      <!-- LOGO -->
+      <div class="flex items-center gap-3">
+        <div class="size-8 rounded-full bg-primary flex items-center justify-center text-white">
+          <span class="material-symbols-outlined text-[20px]">
+            flight_takeoff
+          </span>
+        </div>
+        <h2 class="text-lg font-bold tracking-tight text-[#111318] dark:text-white">
+          GoAir
+        </h2>
+      </div>
+
+      <!-- Inicio -->
+      <a
+        routerLink="/dashboard"
+        routerLinkActive="text-primary"
+        class="text-sm font-medium text-[#637588] dark:text-[#9da6b9]
+               hover:text-primary transition-colors">
+        Inicio
+      </a>
+
+    </div>
+
+    <!-- DERECHA: Usuario + Logout -->
+    <div class="flex items-center gap-6">
+
+      <!-- User info -->
+      <div class="hidden sm:flex flex-col items-end leading-tight">
+        <span class="text-sm font-semibold text-[#111318] dark:text-white">
+          {{ user?.nombre }}
+        </span>
+        <span class="text-xs text-[#637588] dark:text-[#9da6b9]">
+          {{ user?.correo }}
+        </span>
+      </div>
+
+      <!-- Logout -->
+      <button
+        (click)="logout()"
+        class="h-9 px-4 rounded-lg
+               bg-primary/10 hover:bg-primary/20
+               text-primary text-sm font-bold
+               transition-colors">
+        Cerrar sesión
+      </button>
+
+    </div>
+
+  </div>
+</header>

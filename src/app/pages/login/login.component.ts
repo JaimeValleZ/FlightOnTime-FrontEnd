@@ -12,6 +12,8 @@ export class LoginComponent {
 
   loginForm: FormGroup;
   loading = false;
+  showPassword = false;
+
 
   constructor(
     private fb: FormBuilder,
@@ -22,6 +24,10 @@ export class LoginComponent {
       correo: ['', [Validators.required, Validators.email]],
       contrasenha: ['', Validators.required]
     });
+  }
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
   }
 
   submit() {
@@ -37,7 +43,7 @@ export class LoginComponent {
         next: () => {
           this.loading = false;
           AlertUtil.success('Bienvenido', 'Inicio de sesión exitoso');
-          this.router.navigate(['/']);
+          this.router.navigate(['/dashboard']);
         },
         error: () => {
           this.loading = false;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FlightDetail, FlightService } from '../../service/flight.service';
+import { FlightDetail, FlightService, PredictionResponse } from '../../service/flight.service';
 
 @Component({
   selector: 'app-detalle-vuelo',
@@ -9,6 +9,7 @@ import { FlightDetail, FlightService } from '../../service/flight.service';
 export class DetalleVueloComponent implements OnInit {
 
   flight!: FlightDetail;
+  prediction!: PredictionResponse;
   loading = true;
   error = false;
 
@@ -29,10 +30,24 @@ export class DetalleVueloComponent implements OnInit {
           this.duracionHoras = Math.floor(Number(this.flight.duracion) / 60);
           this.duracionMinutos = Number(this.flight.duracion) % 60;
 
-          this.loading = false;
+          this.loadPrediction();
         },
         error: () => {
           this.error = true;
+          this.loading = false;
+        }
+      });
+  }
+
+    loadPrediction(): void {
+    this.flightService.getPredictionStatic()
+      .subscribe({
+        next: (data) => {
+          this.prediction = data;
+          this.loading = false;
+        },
+        error: () => {
+          console.error('Error obteniendo predicción');
           this.loading = false;
         }
       });

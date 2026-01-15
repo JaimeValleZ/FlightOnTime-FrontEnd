@@ -2,6 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+export interface UserInfo {
+  nombre: string;
+  correo: string;
+}
+
 export interface RegisterRequest {
   nombre: string;
   apellido: string;
@@ -20,5 +25,9 @@ export class UsuarioService {
 
   register(data: RegisterRequest): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, data);
+  }
+
+  getCurrentUser() {
+    return this.http.get<UserInfo>(`${this.apiUrl}/me`);
   }
 }

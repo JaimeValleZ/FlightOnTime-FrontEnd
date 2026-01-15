@@ -8,6 +8,10 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from "../app-routing.module";
 import { DetalleVueloComponent } from './detalle-vuelo/detalle-vuelo.component';
 import { AeropuertosComponent } from './aeropuertos/aeropuertos.component';
+import { LayoutComponent } from './layout/layout.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { AuthNavbarComponent } from './auth-navbar/auth-navbar.component';
+import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
 
 
 
@@ -17,12 +21,17 @@ declarations: [
     RegisterComponent,
     LoginComponent,
     DetalleVueloComponent,
-    AeropuertosComponent
+    AeropuertosComponent,
+    LayoutComponent,
+    NavbarComponent,
+    AuthNavbarComponent,
+    AuthLayoutComponent
   ],
   imports: [
     CommonModule,
     HttpClientModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    AppRoutingModule
+]
 })
 export class PagesModule { }

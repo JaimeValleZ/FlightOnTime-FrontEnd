@@ -5,31 +5,52 @@ import { LoginComponent } from './pages/login/login.component';
 import { authGuard } from './auth/auth.guard';
 import { VuelosComponent } from './pages/vuelos/vuelos.component';
 import { DetalleVueloComponent } from './pages/detalle-vuelo/detalle-vuelo.component';
+import { LayoutComponent } from './pages/layout/layout.component';
+import { AuthLayoutComponent } from './pages/auth-layout/auth-layout.component';
+import { noAuthGuard } from './auth/no-auth.guard';
 
 const routes: Routes = [
 
-  // 🔓 Públicas
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
 
-  // 🔐 Protegidas
+  // 🔓 AUTH (solo si NO está logueado)
   {
     path: '',
+    component: AuthLayoutComponent,
+    canActivate: [noAuthGuard],
+    children: [
+      { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterComponent },
+      { path: '', redirectTo: 'login', pathMatch: 'full' }
+    ]
+  },
+
+  // 🔐 Protegidas
+   // 🔐 PROTEGIDAS (CON NAVBAR)
+  {
+    path: '',
+    component: LayoutComponent,
     canActivate: [authGuard],
     children: [
+
+      // redirección inicial
       {
         path: '',
-        redirectTo: 'vuelo',
+        redirectTo: 'dashboard',
         pathMatch: 'full'
       },
+
       {
         path: 'dashboard',
         component: VuelosComponent
       },
+
       {
         path: 'vuelo',
         component: DetalleVueloComponent
       }
+
+      // si luego quieres dinámico:
+      // { path: 'vuelo/:iata', component: DetalleVueloComponent }
     ]
   },
 

@@ -1,21 +1,5 @@
 <div class="min-h-screen flex flex-col">
 
-  <!-- HEADER -->
-  <header class="flex items-center justify-between px-6 py-4 border-b border-border">
-    <div class="flex items-center gap-3">
-      <div class="size-8 text-primary">
-        <svg viewBox="0 0 48 48" class="w-full h-full" fill="currentColor">
-        </svg>
-      </div>
-      <h2 class="text-xl font-bold">FlightPredictor Pro</h2>
-    </div>
-
-    <nav class="hidden sm:flex gap-6 text-sm text-text-secondary">
-      <a class="hover:text-primary">Ayuda</a>
-      <a class="hover:text-primary">Contacto</a>
-    </nav>
-  </header>
-
   <!-- MAIN -->
   <main class="flex flex-1">
 
@@ -25,18 +9,22 @@
       <!-- Imagen -->
       <img src="assets/login_image.png" alt="Flight background" class="absolute inset-0 w-full h-full object-cover" />
 
-      <!-- Gradiente oscuro (abajo → arriba) -->
+      <!-- Gradiente oscuro -->
       <div class="absolute inset-0
-           bg-gradient-to-t
-           from-background
-           via-background/60
-           to-transparent">
+               bg-gradient-to-t
+               from-background
+               via-background/60
+               to-transparent">
       </div>
 
       <!-- Contenido -->
       <div class="relative z-10 p-16 flex flex-col justify-end max-w-lg">
-        <div class="mb-6 flex items-center justify-center size-12 rounded-xl bg-primary/20 text-primary">
-          <span class="material-symbols-outlined text-2xl">flight_takeoff</span>
+        <div class="mb-6 flex items-center justify-center
+                 size-12 rounded-xl
+                 bg-primary/20 text-primary">
+          <span class="material-symbols-outlined text-2xl">
+            flight_takeoff
+          </span>
         </div>
 
         <h1 class="text-4xl font-bold leading-tight mb-4">
@@ -51,12 +39,13 @@
 
     </section>
 
-
     <!-- LOGIN -->
     <section class="flex flex-1 items-center justify-center px-6">
       <div class="w-full max-w-md card p-8">
 
-        <h2 class="text-3xl font-black mb-2">Bienvenido de nuevo</h2>
+        <h2 class="text-3xl font-black mb-2">
+          Bienvenido de nuevo
+        </h2>
         <p class="text-text-secondary mb-8">
           Ingresa a tu cuenta para acceder a las predicciones.
         </p>
@@ -72,16 +61,23 @@
           </div>
 
           <!-- PASSWORD -->
+          <!-- PASSWORD -->
           <div>
             <label class="block mb-2 text-sm font-medium">
               Contraseña
             </label>
-            <input type="password" class="form-input" placeholder="Ingresa tu contraseña"
-              formControlName="contrasenha" />
-            <div class="text-right mt-2">
-              <a class="text-sm text-primary hover:underline">
-                ¿Olvidaste tu contraseña?
-              </a>
+
+            <div class="relative">
+              <input [type]="showPassword ? 'text' : 'password'" class="form-input pr-10"
+                placeholder="Ingresa tu contraseña" formControlName="contrasenha" />
+
+              <!-- Toggle -->
+              <button type="button" (click)="togglePassword()" class="absolute inset-y-0 right-0 flex items-center pr-3
+             text-text-secondary hover:text-primary transition-colors" tabindex="-1">
+                <span class="material-symbols-outlined text-[20px]">
+                  {{ showPassword ? 'visibility_off' : 'visibility' }}
+                </span>
+              </button>
             </div>
           </div>
 
@@ -92,13 +88,13 @@
 
         </form>
 
-
         <p class="text-center text-sm text-text-secondary mt-6">
           ¿No tienes una cuenta?
-          <a class="text-primary font-bold hover:underline">
+          <a routerLink="/register" class="text-primary font-bold hover:underline cursor-pointer">
             Crear cuenta
           </a>
         </p>
+
 
       </div>
     </section>

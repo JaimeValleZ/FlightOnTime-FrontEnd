@@ -31,18 +31,34 @@ export interface FlightDetail {
   climaActual: WeatherDTO;
 }
 
+export interface PredictionResponse {
+  prevision: string;
+  probabilidad: number;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class FlightService {
 
-  private readonly API_URL = 'http://localhost:8080/api/routes';
+  private readonly API_URL = 'http://localhost:8080';
 
   constructor(private http: HttpClient) {}
 
   // 🚧 Por ahora NO dinámico
   getFlightDetailStatic(): Observable<FlightDetail> {
     return this.http.get<FlightDetail>(
-      `${this.API_URL}/vuelo/AV8479`
+      `${this.API_URL}/api/routes/vuelo/AV9781`
     );
-  }}
+  }
+
+    // 🔮 Predicción estática por ahora
+  getPredictionStatic(): Observable<PredictionResponse> {
+    return this.http.post<PredictionResponse>(
+      `${this.API_URL}/prediccion/predict-from-flight/AV9781`,
+      null
+    );
+  }
+
+}

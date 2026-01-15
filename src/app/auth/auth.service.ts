@@ -13,7 +13,6 @@ export class AuthService {
     return this.http.post<{ token: string }>(this.API, data)
       .pipe(
 tap(res => {
-  console.log('TOKEN RECIBIDO:', res.token);
   localStorage.setItem('token', res.token);
 })
         
