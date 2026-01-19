@@ -14,11 +14,11 @@ export interface RegisterRequest {
 })
 export class UsuarioService {
 
-  private apiUrl = 'http://localhost:8080/usuarios'; // ajusta puerto
-
+  private apiUrl = 'http://localhost:8081/usuarios'; // ajusta puerto
   constructor(private http: HttpClient) {}
 
   register(data: RegisterRequest): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, data);
   }
+
 }
