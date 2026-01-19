@@ -8,7 +8,7 @@ module.exports = {
       colors: {
         primary: "#2b6cee",
 
-        /* 🌙 Tema oscuro como base */
+        /*  Tema oscuro como base */
         background: "#101622",
         surface: "#1c1f27",
 

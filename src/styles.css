@@ -40,4 +40,19 @@ html, body {
            hover:bg-blue-600 transition
            disabled:opacity-50;
   }
+  .nav-link {
+    @apply relative text-sm font-medium text-text-secondary
+           transition-colors;
+  }
+
+  .nav-link::after {
+    content: '';
+    @apply absolute left-0 -bottom-1 w-0 h-[2px]
+           bg-primary transition-all duration-300;
+  }
+
+  .nav-link:hover::after,
+  .active-link::after {
+    @apply w-full;
+  }
 }

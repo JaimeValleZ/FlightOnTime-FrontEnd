@@ -3,14 +3,23 @@ import { RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { authGuard } from './auth/auth.guard';
-import { VuelosComponent } from './pages/vuelos/vuelos.component';
 import { DetalleVueloComponent } from './pages/detalle-vuelo/detalle-vuelo.component';
 import { LayoutComponent } from './pages/layout/layout.component';
 import { AuthLayoutComponent } from './pages/auth-layout/auth-layout.component';
 import { noAuthGuard } from './auth/no-auth.guard';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { SobreNosotrosComponent } from './pages/sobre-nosotros/sobre-nosotros.component';
+import { PublicLayoutComponent } from './pages/public-layout/public-layout.component';
 
 const routes: Routes = [
 
+    {
+    path: 'info',
+    component: PublicLayoutComponent,
+    children: [
+      { path: 'sobre-nosotros', component: SobreNosotrosComponent }
+    ]
+  },
 
   // 🔓 AUTH (solo si NO está logueado)
   {
@@ -41,7 +50,7 @@ const routes: Routes = [
 
       {
         path: 'dashboard',
-        component: VuelosComponent
+        component: DashboardComponent
       },
 
       {

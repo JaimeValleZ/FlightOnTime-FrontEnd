@@ -1,0 +1,97 @@
+<main class="flex-1 bg-background px-6 py-8">
+    <div class="max-w-7xl mx-auto flex flex-col gap-8">
+
+        <!-- HEADER -->
+        <header class="flex flex-col gap-2">
+            <h1 class="text-3xl md:text-4xl font-black">
+                Aerolíneas
+            </h1>
+            <p class="text-text-secondary">
+                Selecciona una aerolínea para ver sus rutas y predicciones futuras.
+            </p>
+        </header>
+
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+            <div class="card p-5 flex flex-col justify-between
+           hover:border-primary/50
+           hover:shadow-lg
+           hover:shadow-blue-500/10
+           transition-all">
+
+                <div class="flex justify-between items-start mb-2">
+                    <p class="text-text-secondary text-sm font-medium">
+                        Total Aerolíneas
+                    </p>
+
+                    <span class="material-symbols-outlined
+               text-primary bg-primary/10 p-1.5 rounded-md">
+                        airlines
+                    </span>
+                </div>
+
+                <div>
+                    <p class="text-text-primary text-3xl font-bold">
+                        {{ airlines.length }}
+                    </p>
+                    <p class="text-text-secondary text-xs mt-1">
+                        Aerolíneas registradas
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- SEARCH -->
+        <div class="relative max-w-md group">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2
+           text-text-secondary group-focus-within:text-primary transition-colors">
+                search
+            </span>
+
+            <input type="text" [(ngModel)]="search" placeholder="Buscar por nombre o código IATA (ej. IB)"
+                class="form-input pl-10" />
+        </div>
+
+
+
+        <!-- GRID -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <article *ngFor="let airline of filteredAirlines" (click)="goToRoutes(airline.iata)" class="card p-6 cursor-pointer
+               hover:border-primary/50
+               hover:shadow-lg
+               hover:shadow-blue-500/10
+               transition-all group">
+
+                <div class="flex items-start justify-between mb-4">
+                    <div>
+                        <h3 class="text-xl font-bold">
+                            {{ airline.name }}
+                        </h3>
+                        <span class="inline-block mt-1
+                     text-xs font-mono
+                     px-2 py-0.5 rounded
+                     bg-border text-white">
+                            {{ airline.iata }}
+                        </span>
+                    </div>
+
+                    <span class="material-symbols-outlined text-primary
+                   group-hover:translate-x-1 transition-transform">
+                        arrow_forward
+                    </span>
+                </div>
+
+                <p class="text-text-secondary text-sm">
+                    Ver rutas futuras y predicción de vuelos.
+                </p>
+            </article>
+
+        </section>
+
+    </div>
+</main>

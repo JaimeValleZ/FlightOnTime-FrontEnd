@@ -1,21 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs';
+import { isTokenExpired } from '../utils/jwt.util';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
   private API = 'http://localhost:8080/login';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   login(data: { correo: string; contrasenha: string }) {
     return this.http.post<{ token: string }>(this.API, data)
       .pipe(
-tap(res => {
-  localStorage.setItem('token', res.token);
-})
-        
+        tap(res => {
+          localStorage.setItem('token', res.token);
+        })
+
       );
   }
 
@@ -28,6 +29,14 @@ tap(res => {
   }
 
   isLoggedIn(): boolean {
-    return !!this.getToken();
+    const token = this.getToken();
+    if (!token) return false;
+
+    if (isTokenExpired(token)) {
+      this.logout();
+      return false;
+    }
+
+    return true;
   }
 }

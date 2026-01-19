@@ -1,0 +1,8 @@
+<!-- public-layout.component.html -->
+
+<app-auth-navbar *ngIf="!isAuthenticated"></app-auth-navbar>
+<app-navbar *ngIf="isAuthenticated"></app-navbar>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
