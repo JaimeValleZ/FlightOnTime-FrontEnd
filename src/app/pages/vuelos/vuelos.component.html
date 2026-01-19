@@ -1,1 +1,221 @@
-<p>vuelos works!</p>
+<div *ngIf="!isLoading; else loadingTpl" class="flex flex-col h-screen bg-background text-text-primary">
+
+    <!-- HEADER -->
+    <header>
+        <div class="max-w-[1600px] mx-auto px-4 md:px-10 py-6">
+            <h2 class="text-3xl font-display font-bold">
+                Vuelos disponibles: {{ airline | uppercase }}
+            </h2>
+            <p class="text-text-secondary mt-1">
+                Gestión y monitoreo de vuelos futuros.
+            </p>
+        </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="flex-1 overflow-y-auto">
+        <div class="max-w-[1600px] mx-auto px-4 md:px-10 py-6 space-y-6">
+
+            <!-- BACK -->
+            <button (click)="goBack()" class="flex items-center gap-2 text-sm text-text-secondary
+               hover:text-primary transition">
+                <span class="material-symbols-outlined text-base">
+                    arrow_back
+                </span>
+                Volver
+            </button>
+
+            <!-- STATS -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                <!-- Total -->
+                <div class="card p-5">
+                    <div class="flex items-center gap-3 mb-3 text-primary">
+                        <span class="material-symbols-outlined">flight_takeoff</span>
+                        <span class="text-sm font-medium">Vuelos Totales</span>
+                    </div>
+                    <p class="text-3xl font-display font-bold">
+                        {{ stats.totalVuelos }}
+                    </p>
+                </div>
+
+                <!-- Puntuales -->
+                <div class="card p-5">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center gap-3 text-emerald-500">
+                            <span class="material-symbols-outlined">check_circle</span>
+                            <span class="text-sm font-medium">A Tiempo</span>
+                        </div>
+                        <span class="text-sm text-emerald-500">
+                            {{ porcentajePuntual | number:'1.0-2' }}%
+                        </span>
+                    </div>
+                    <p class="text-3xl font-display font-bold">
+                        {{ stats.vuelosPuntuales }}
+                    </p>
+                </div>
+
+                <!-- Retrasados -->
+                <div class="card p-5">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center gap-3 text-orange-500">
+                            <span class="material-symbols-outlined">schedule</span>
+                            <span class="text-sm font-medium">Retrasados</span>
+                        </div>
+                        <span class="text-sm text-orange-500">
+                            {{ porcentajeRetrasado | number:'1.0-2' }}%
+                        </span>
+                    </div>
+                    <p class="text-3xl font-display font-bold">
+                        {{ stats.vuelosRetrasados }}
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- SEARCH & FILTERS -->
+            <div class="card p-4">
+                <div class="flex flex-col lg:flex-row gap-4 items-center">
+
+                    <!-- SEARCH -->
+                    <div class="relative flex-1 w-full">
+                        <span
+                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary">
+                            search
+                        </span>
+                        <input type="text" [(ngModel)]="searchText" placeholder="Buscar por vuelo o destino..." class="w-full pl-10 pr-3 py-2.5 rounded-lg bg-background border border-border
+                     text-text-primary placeholder-text-secondary
+                     focus:outline-none focus:ring-1 focus:ring-primary">
+                    </div>
+
+                    <!-- ORIGEN -->
+                    <select [(ngModel)]="filterOrigen" class="w-full lg:w-48 py-2.5 px-3 rounded-lg bg-background border border-border
+                   text-text-primary focus:ring-1 focus:ring-primary">
+                        <option value="">Origen: Todos</option>
+                        <option *ngFor="let o of origenes" [value]="o">{{ o }}</option>
+                    </select>
+
+                    <!-- DESTINO -->
+                    <select [(ngModel)]="filterDestino" class="w-full lg:w-48 py-2.5 px-3 rounded-lg bg-background border border-border
+                   text-text-primary focus:ring-1 focus:ring-primary">
+                        <option value="">Destino: Todos</option>
+                        <option *ngFor="let d of destinos" [value]="d">{{ d }}</option>
+                    </select>
+
+                    <!-- FECHA -->
+                    <input type="date" [(ngModel)]="filterFecha" class="w-full lg:w-48 py-2.5 px-3 rounded-lg bg-background border border-border
+                   text-text-primary focus:ring-1 focus:ring-primary">
+
+                    <!-- REFRESH -->
+                    <button (click)="resetFilters()" class="p-2.5 rounded-lg border border-border
+                   text-text-secondary hover:text-primary hover:bg-primary/10">
+                        <span class="material-symbols-outlined">refresh</span>
+                    </button>
+
+                </div>
+            </div>
+
+            <!-- TABLE -->
+            <div class="card overflow-hidden">
+                <table class="min-w-full divide-y divide-border">
+
+                    <thead class="bg-background">
+                        <tr>
+                            <th class="px-6 py-4 text-left text-xs text-text-secondary">Vuelo</th>
+                            <th class="px-6 py-4 text-left text-xs text-text-secondary">Ruta</th>
+                            <th class="px-6 py-4 text-left text-xs text-text-secondary">Fecha</th>
+                            <th class="px-6 py-4 text-left text-xs text-text-secondary">Salida / Llegada</th>
+                            <th class="px-6 py-4"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="divide-y divide-border">
+
+                        <tr *ngFor="let flight of paginatedFlights" class="hover:bg-primary/5 transition">
+
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div
+                                        class="size-8 rounded-full bg-slate-800 flex items-center justify-center text-white border border-slate-700">
+                                        <span class="material-symbols-outlined text-sm">airlines</span>
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="font-medium">{{ flight.vuelo }}</div>
+                                        <div class="text-xs text-text-secondary">{{ flight.aerolinea }}</div>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td class="px-6 py-4">
+                                {{ flight.origenIata }} → {{ flight.destinoIata }}
+                                <div class="text-xs text-text-secondary">
+                                    {{ flight.origen }} - {{ flight.destino }}
+                                </div>
+                            </td>
+
+                            <td class="px-6 py-4">
+                                {{ flight.fecha }}
+                            </td>
+
+                            <td class="px-6 py-4">
+                                <div class="flex flex-col gap-1">
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-xs">flight_takeoff</span>
+                                        {{ flight.horaSalida }}
+                                    </span>
+                                    <span class="flex items-center gap-1 text-text-secondary">
+                                        <span class="material-symbols-outlined text-xs">flight_land</span>
+                                        {{ flight.horaLlegada }}
+                                    </span>
+                                </div>
+                            </td>
+
+                            <td class="px-6 py-4 text-right">
+                                <button (click)="goToDetalle(flight.vuelo)"
+                                    class="text-text-secondary hover:text-primary">
+                                    <span class="material-symbols-outlined">
+                                        arrow_forward_ios
+                                    </span>
+                                </button>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+
+                <!-- PAGINATION -->
+                <div class="flex justify-between items-center px-6 py-3 border-t border-border">
+                    <span class="text-sm text-text-secondary">
+                        Mostrando
+                        {{ (currentPage - 1) * pageSize + 1 }}
+                        a
+                        {{ Math.min(currentPage * pageSize, totalFlights) }}
+                        de {{ totalFlights }}
+                    </span>
+
+                    <div class="flex gap-2">
+                        <button class="btn-primary h-9 px-3" (click)="prevPage()">Anterior</button>
+                        <button class="btn-primary h-9 px-3" (click)="nextPage()">Siguiente</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<ng-template #loadingTpl>
+    <div class="flex items-center justify-center h-screen bg-background">
+        <div class="flex flex-col items-center gap-4">
+            <span class="material-symbols-outlined text-primary text-5xl animate-pulse">
+                flight
+            </span>
+            <p class="text-text-secondary text-sm">
+                Cargando rutas de vuelos…
+            </p>
+        </div>
+    </div>
+</ng-template>

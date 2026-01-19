@@ -38,6 +38,6 @@ export class DashboardComponent {
   goToRoutes(iata: string) {
     // Más adelante esto llamará al endpoint:
     // /api/routes/{iata}/future
-    this.router.navigate(['/routes', iata]);
+    this.router.navigate(['/aerolinea/rutas', iata]);
   }
 }

@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 
 export interface WeatherDTO {
   temperature: number;
@@ -36,6 +36,25 @@ export interface PredictionResponse {
   probabilidad: number;
 }
 
+export interface FlightRoute {
+  aerolinea: string;
+  vuelo: string;
+  origenIata: string;
+  destinoIata: string;
+  origen: string;
+  destino: string;
+  fecha: string;
+  horaSalida: string;
+  horaLlegada: string;
+}
+
+export interface FlightStats {
+  totalVuelos: number;
+  vuelosPuntuales: number;
+  vuelosRetrasados: number;
+  porcentajePuntual: number;
+  porcentajeRetrasado: number;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -44,20 +63,49 @@ export class FlightService {
 
   private readonly API_URL = 'http://localhost:8080';
 
-  constructor(private http: HttpClient) {}
+  private routesCache = new Map<string, FlightRoute[]>();
+  private statsCache = new Map<string, FlightStats>();
+
+  constructor(private http: HttpClient) { }
 
   // 🚧 Por ahora NO dinámico
-  getFlightDetailStatic(): Observable<FlightDetail> {
+  getFlightDetailStatic(flightIata: string): Observable<FlightDetail> {
     return this.http.get<FlightDetail>(
-      `${this.API_URL}/api/routes/vuelo/AV9781`
+      `${this.API_URL}/api/routes/vuelo/${flightIata}`
     );
   }
 
-    // 🔮 Predicción estática por ahora
-  getPredictionStatic(): Observable<PredictionResponse> {
+  // 🔮 Predicción 
+  getPredictionStatic(flightIata: string): Observable<PredictionResponse> {
     return this.http.post<PredictionResponse>(
-      `${this.API_URL}/prediccion/predict-from-flight/AV9781`,
+      `${this.API_URL}/prediccion/predict-from-flight/${flightIata}`,
       null
+    );
+  }
+
+  getRoutesByAirline(airline: string): Observable<FlightRoute[]> {
+
+    if (this.routesCache.has(airline)) {
+      return of(this.routesCache.get(airline)!);
+    }
+
+    return this.http.get<FlightRoute[]>(
+      `${this.API_URL}/api/routes/${airline}/future`
+    ).pipe(
+      tap(data => this.routesCache.set(airline, data))
+    );
+  }
+
+  getFlightStatsByAirline(airline: string): Observable<FlightStats> {
+
+    if (this.statsCache.has(airline)) {
+      return of(this.statsCache.get(airline)!);
+    }
+
+    return this.http.get<FlightStats>(
+      `${this.API_URL}/vuelos/stats/${airline}`
+    ).pipe(
+      tap(data => this.statsCache.set(airline, data))
     );
   }
 

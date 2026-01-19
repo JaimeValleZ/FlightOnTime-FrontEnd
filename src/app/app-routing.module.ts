@@ -10,10 +10,11 @@ import { noAuthGuard } from './auth/no-auth.guard';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { SobreNosotrosComponent } from './pages/sobre-nosotros/sobre-nosotros.component';
 import { PublicLayoutComponent } from './pages/public-layout/public-layout.component';
+import { VuelosComponent } from './pages/vuelos/vuelos.component';
 
 const routes: Routes = [
 
-    {
+  {
     path: 'info',
     component: PublicLayoutComponent,
     children: [
@@ -34,7 +35,7 @@ const routes: Routes = [
   },
 
   // 🔐 Protegidas
-   // 🔐 PROTEGIDAS (CON NAVBAR)
+  // 🔐 PROTEGIDAS (CON NAVBAR)
   {
     path: '',
     component: LayoutComponent,
@@ -54,9 +55,15 @@ const routes: Routes = [
       },
 
       {
-        path: 'vuelo',
+        path: 'aerolinea/rutas/:airline',
+        component: VuelosComponent
+      },
+
+      {
+        path: 'vuelos/detalle/:flightIata',
         component: DetalleVueloComponent
       }
+
 
       // si luego quieres dinámico:
       // { path: 'vuelo/:iata', component: DetalleVueloComponent }
@@ -71,4 +78,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

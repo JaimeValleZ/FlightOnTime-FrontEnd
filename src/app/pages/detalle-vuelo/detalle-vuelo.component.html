@@ -11,6 +11,16 @@
 <!-- CONTENT -->
 <div *ngIf="!loading && flight" class="max-w-[1200px] mx-auto px-4 md:px-10 py-8 space-y-8">
 
+  <!-- BACK -->
+  <button (click)="goBack()" class="flex items-center gap-2 text-sm text-text-secondary
+         hover:text-primary transition mb-2">
+    <span class="material-symbols-outlined text-base">
+      arrow_back
+    </span>
+    Volver
+  </button>
+
+
   <!-- BREADCRUMB -->
   <div class="flex items-center gap-2 text-sm text-text-secondary">
     <span>Inicio</span>
@@ -219,7 +229,7 @@
           </div>
         </div>
 
-        <button class="btn-primary w-full mt-4">
+        <button class="btn-primary w-full mt-4" (click)="loadPrediction(flight.vuelo)">
           <span class="material-symbols-outlined">refresh</span>
           Actualizar análisis
         </button>

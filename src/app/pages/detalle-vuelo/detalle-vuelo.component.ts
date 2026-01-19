@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FlightDetail, FlightService, PredictionResponse } from '../../service/flight.service';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-detalle-vuelo',
@@ -17,20 +19,27 @@ export class DetalleVueloComponent implements OnInit {
   duracionHoras = 0;
   duracionMinutos = 0;
 
-  constructor(private flightService: FlightService) {}
+  constructor(private flightService: FlightService, private route: ActivatedRoute, private location: Location) { }
 
   ngOnInit(): void {
-    // 🔒 Llamada estática por ahora
-    this.flightService.getFlightDetailStatic()
+    const flightIata = this.route.snapshot.paramMap.get('flightIata');
+
+    if (!flightIata) {
+      this.error = true;
+      this.loading = false;
+      return;
+    }
+
+    this.flightService.getFlightDetailStatic(flightIata)
       .subscribe({
         next: (data) => {
           this.flight = data;
 
-          // 👉 Convertir minutos a horas y minutos
+          // ⏱️ Duración
           this.duracionHoras = Math.floor(Number(this.flight.duracion) / 60);
           this.duracionMinutos = Number(this.flight.duracion) % 60;
 
-          this.loadPrediction();
+          this.loadPrediction(flightIata);
         },
         error: () => {
           this.error = true;
@@ -39,8 +48,8 @@ export class DetalleVueloComponent implements OnInit {
       });
   }
 
-    loadPrediction(): void {
-    this.flightService.getPredictionStatic()
+  loadPrediction(flightIata: string): void {
+    this.flightService.getPredictionStatic(flightIata)
       .subscribe({
         next: (data) => {
           this.prediction = data;
@@ -52,4 +61,9 @@ export class DetalleVueloComponent implements OnInit {
         }
       });
   }
+
+  goBack(): void {
+  this.location.back();
+}
+
 }
