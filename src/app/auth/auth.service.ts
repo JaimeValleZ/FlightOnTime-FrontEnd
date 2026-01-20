@@ -14,18 +14,24 @@ export class AuthService {
     return this.http.post<{ token: string }>(this.API, data)
       .pipe(
         tap(res => {
-          localStorage.setItem('token', res.token);
+          if (typeof localStorage !== 'undefined') {
+            localStorage.setItem('token', res.token);
+          }
         })
-
       );
   }
 
   getToken() {
-    return localStorage.getItem('token');
+    if (typeof localStorage !== 'undefined') {
+      return localStorage.getItem('token');
+    }
+    return null; // Si estamos en el servidor, devolvemos nulo sin explotar
   }
 
   logout() {
-    localStorage.removeItem('token');
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('token');
+    }
   }
 
   isLoggedIn(): boolean {
