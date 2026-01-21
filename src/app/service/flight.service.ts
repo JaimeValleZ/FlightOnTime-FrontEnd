@@ -96,17 +96,10 @@ export class FlightService {
     );
   }
 
-  getFlightStatsByAirline(airline: string): Observable<FlightStats> {
-
-    if (this.statsCache.has(airline)) {
-      return of(this.statsCache.get(airline)!);
-    }
-
-    return this.http.get<FlightStats>(
-      `${this.API_URL}/vuelos/stats/${airline}`
-    ).pipe(
-      tap(data => this.statsCache.set(airline, data))
-    );
-  }
+getFlightStatsByAirline(airline: string): Observable<FlightStats> {
+  return this.http.get<FlightStats>(
+    `${this.API_URL}/vuelos/stats/${airline}`
+  );
+}
 
 }
