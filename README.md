@@ -1,27 +1,68 @@
-# FlightOnTime
+# ✈️ GoFly - Predicción de Retrasos de Vuelos (Front-End)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.17.
+Bienvenido al repositorio del Front-End de **GoFly**. Esta aplicación web permite a los usuarios predecir posibles retrasos en vuelos utilizando modelos de Machine Learning, presentada con una interfaz moderna y amigable.
 
-## Development server
+## 🛠️ Tecnologías
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+* **Framework:** Angular
+* **Estilos:** Tailwind CSS
+* **Alertas:** SweetAlert2
 
-## Code scaffolding
+---
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## ⚠️ Requisitos Previos (Back-End)
 
-## Build
+**IMPORTANTE:** Para que la aplicación funcione correctamente, es **obligatorio** tener en ejecución los servicios de backend antes de iniciar este front-end.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Por favor, asegúrate de desplegar y ejecutar los siguientes servicios:
 
-## Running unit tests
+1.  **Back-End Principal (Spring Boot):**
+    * 🔗 [Repositorio FlightOnTime (Java)](https://github.com/JaimeValleZ/FlightOnTime.git)
+2.  **Microservicio de Predicción (Python/ML):**
+    * 🔗 [Repositorio MicroServicioML (Python)](https://github.com/GP-Core/microServicioML.git)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+---
 
-## Running end-to-end tests
+## 🚀 Instalación y Configuración
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Sigue estos pasos para configurar el entorno de desarrollo local.
 
-## Further help
+### 1. Instalar dependencias generales
+Instala los paquetes base de Node.js necesarios para el proyecto:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```bash
+npm install
+```
+2. Configurar Tailwind CSS
+
+Ejecuta los siguientes comandos para instalar el motor de estilos y generar los archivos de configuración:
+
+```Bash
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init
+```
+3. Instalar componentes de UI
+Instala la librería para el manejo de alertas visuales (SweetAlert2):
+
+```Bash
+npm install sweetalert2
+```
+💻 Ejecución del Proyecto
+Una vez instaladas todas las dependencias y asegurándote de que los Back-Ends están corriendo, puedes iniciar el servidor de desarrollo de Angular:
+
+```Bash
+ng serve
+```
+Una vez compilado, abre tu navegador y navega a: 👉 http://localhost:4200/
+
+📂 Estructura del Proyecto
+src/app: Contiene la lógica y componentes de Angular.
+
+tailwind.config.js: Configuración de estilos.
+
+angular.json: Configuración del CLI de Angular.
+
+Hecho con ❤️ por el equipo de GoFly.
+
+
+---
