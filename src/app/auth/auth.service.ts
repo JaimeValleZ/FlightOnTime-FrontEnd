@@ -2,16 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs';
 import { isTokenExpired } from '../utils/jwt.util';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-  private API = 'http://localhost:8080/login';
+  private apiUrl = `${environment.apiUrl}/login`;
 
   constructor(private http: HttpClient) { }
 
   login(data: { correo: string; contrasenha: string }) {
-    return this.http.post<{ token: string }>(this.API, data)
+    return this.http.post<{ token: string }>(this.apiUrl, data)
       .pipe(
         tap(res => {
           localStorage.setItem('token', res.token);
