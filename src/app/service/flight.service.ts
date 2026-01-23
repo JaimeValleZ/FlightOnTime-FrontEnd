@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface WeatherDTO {
   temperature: number;
@@ -61,7 +62,7 @@ export interface FlightStats {
 })
 export class FlightService {
 
-  private readonly API_URL = 'http://localhost:8080';
+  private readonly API_URL = environment.apiUrl;
 
   private routesCache = new Map<string, FlightRoute[]>();
   private statsCache = new Map<string, FlightStats>();

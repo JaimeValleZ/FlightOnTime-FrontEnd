@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment.development';
 
 export interface UserInfo {
   nombre: string;
@@ -19,7 +20,7 @@ export interface RegisterRequest {
 })
 export class UsuarioService {
 
-  private apiUrl = 'http://localhost:8080/usuarios'; // ajusta puerto
+  private apiUrl = `${environment.apiUrl}/usuarios`; // ajusta puerto
 
   constructor(private http: HttpClient) {}
 
