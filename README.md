@@ -67,7 +67,7 @@ Hecho con ❤️ por el equipo de GoFly.
 
 ---
 
-🌐 Despliegue del Front-End (Producción)
+## 🌐 Despliegue del Front-End (Producción)
 
 El Front-End de GoFly se despliega en Render utilizando un Dockerfile, lo que permite construir y ejecutar la aplicación Angular de forma consistente y reproducible en un entorno productivo.
 
@@ -124,6 +124,7 @@ Las URLs del backend se configuran como variables de entorno en Render, evitando
 🧪 Desarrollo Local vs Producción
 Entorno	Ejecución
 Local (rama docker)	a traves de Docker, instrucciones en el siguiente repo: https://github.com/JulioChaverra/GoFly.git (rama main)
+
 Producción	Dockerfile + Web Service (Render)
 
 En desarrollo local se utiliza el servidor de Angular (ng serve), mientras que en producción la aplicación se construye y ejecuta dentro de un contenedor Docker administrado por Render.
