@@ -66,3 +66,64 @@ Hecho con ❤️ por el equipo de GoFly.
 
 
 ---
+
+🌐 Despliegue del Front-End (Producción)
+
+El Front-End de GoFly se despliega en Render utilizando un Dockerfile, lo que permite construir y ejecutar la aplicación Angular de forma consistente y reproducible en un entorno productivo.
+
+🐳 Despliegue con Dockerfile
+
+El proyecto incluye un Dockerfile multi-stage que:
+
+Compila la aplicación Angular en una imagen Node.js (node:18-alpine).
+
+Genera los archivos estáticos en la carpeta dist.
+
+Ejecuta la aplicación como un Web Service en Render utilizando Node.js.
+
+Este enfoque garantiza:
+
+Independencia del entorno local.
+
+Builds reproducibles.
+
+Facilidad para escalar o redeplegar la aplicación.
+
+⚙️ Render — Web Service
+
+En Render, el Front-End se configura como un Web Service:
+
+Runtime: Docker
+
+Puerto expuesto: 4200
+
+Start Command: definido directamente en el Dockerfile
+
+Variables para configurar la URL del backend (API Gateway)
+
+Render se encarga automáticamente de:
+
+Construir la imagen Docker.
+
+Ejecutar el contenedor.
+
+Exponer la aplicación vía HTTPS.
+
+Gestionar redeploys automáticos en cada push al repositorio.
+
+🔗 Comunicación con el Back-End
+
+El Front-End se comunica con los servicios backend desplegados en la nube mediante HTTP/HTTPS:
+
+API Gateway (Spring Boot): expuesto públicamente.
+
+Microservicio de predicción ML (Python): consumido a través del backend.
+
+Las URLs del backend se configuran como variables de entorno en Render, evitando valores hardcodeados y facilitando el cambio entre entornos (desarrollo / producción).
+
+🧪 Desarrollo Local vs Producción
+Entorno	Ejecución
+Local (rama docker)	a traves de Docker, instrucciones en el siguiente repo: https://github.com/JulioChaverra/GoFly.git (rama main)
+Producción	Dockerfile + Web Service (Render)
+
+En desarrollo local se utiliza el servidor de Angular (ng serve), mientras que en producción la aplicación se construye y ejecuta dentro de un contenedor Docker administrado por Render.
